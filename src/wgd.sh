@@ -88,6 +88,9 @@ _installPython(){
 		alpine)
 				{ sudo apk update; sudo apk add python3 net-tools --no-cache; printf "\n\n"; } >> ./log/install.txt
 			;;
+		arch)
+				{ sudo pacman -Sy; sudo pacman -S python net-tools; printf "\n\n"; } >> ./log/install.txt
+			;;
 	esac
 	
 	if ! python3 --version > /dev/null 2>&1
@@ -115,6 +118,9 @@ _installPythonVenv(){
 			;;
 			alpine)
 				{ sudo apk update; sudo apk add py3-virtualenv ; printf "\n\n"; } >> ./log/install.txt
+			;;
+			arch)
+				{ sudo pacman -Sy; sudo pacman -S python-virtualenv ; printf "\n\n"; } >> ./log/install.txt
 			;;
 			*)
 				printf "[WGDashboard] %s Sorry, your OS is not supported. Currently the install script only support Debian-based, Red Hat-based OS. With experimental support for Alpine Linux.\n" "$heavy_crossmark"
@@ -160,6 +166,9 @@ _installPythonPip(){
 			alpine)
 				{ sudo apk update; sudo apk add py3-pip --no-cache; printf "\n\n"; } >> ./log/install.txt
 			;;
+			arch)
+				{ sudo pacman -Sy; sudo pacman -S python-pip; printf "\n\n"; } >> ./log/install.txt
+			;;
 			*)
 				printf "[WGDashboard] %s Sorry, your OS is not supported. Currently the install script only support Debian-based, Red Hat-based OS. With experimental support for Alpine Linux.\n" "$heavy_crossmark"
 				printf "%s\n" "$helpMsg"
@@ -198,6 +207,12 @@ _checkWireguard(){
                 { 
                     sudo apk update && sudo apk add wireguard-tools --no-cache;
                     printf "\n[WGDashboard] WireGuard installed on %s.\n\n" "$OS"; 
+                } &>> ./log/install.txt
+            ;;
+            arch)
+                {
+                    sudo pacman -Sy && sudo pacman -S wireguard-tools;
+                    printf "\n[WGDashboard] WireGuard installed on %s.\n\n" "$OS";
                 } &>> ./log/install.txt
             ;;
             *)
